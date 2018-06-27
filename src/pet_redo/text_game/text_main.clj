@@ -45,6 +45,15 @@
   (apply print strings)
   (flush))
 
+(defn handle-death [game]
+  (let [pet (:pet game)]
+    (println "\n\nYour pet died :(")
+    (println (str pet))
+    (println "They were" (p/days-old (:pet game)) "days old.\n\n"))
+
+  (doto default-new-game
+        (serial/write-save)))
+
 (defn main-loop [initial-game]
   (println (str "Days old: " (format "%.2f" (p/days-old (:pet initial-game)))))
 
@@ -58,9 +67,16 @@
                                 (pg/update-game-by-time)
                                 (serial/write-save))]
 
-      (if updated-game?
-        (recur updated-game?)
-        acc-game))))
+      (cond
+        (nil? updated-game?)
+        acc-game
+
+        (p/dead? (:pet updated-game?))
+        (recur (handle-death updated-game?))
+
+        :else
+        (recur updated-game?)))))
+
 
 (defn -main []
   (let [state-save (or (serial/read-save?)

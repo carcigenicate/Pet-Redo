@@ -1,7 +1,6 @@
 (ns pet-redo.core-logic.game
   (:require [pet-redo.core-logic.pet :as p]
             [pet-redo.core-logic.settings :as s]
-            [pet-redo.quiz-logic.std-question-templates :as std-t]
             [pet-redo.core-logic.time-helpers :as th]
 
             [helpers.general-helpers :as g]))
