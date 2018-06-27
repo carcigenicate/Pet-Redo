@@ -46,7 +46,8 @@
   (let [{:keys [pet last-update settings]}
         (-> save-str
             (edn/read-string)
-            (replace-map {:last-update th/parse-date}))]
+            (replace-map {:last-update th/parse-date
+                          :birth-date th/parse-date}))]
 
     (pg/->Game
       (nested-map->Pet pet)
@@ -55,7 +56,8 @@
 
 (defn format-save [game]
   (-> game
-      (replace-map {:last-update th/format-date})
+      (replace-map {:last-update th/format-date
+                    :birth-date th/format-date})
       (pr-str)))
 
 (defn write-save [game]

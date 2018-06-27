@@ -8,6 +8,6 @@
                  [helpers "1"]
                  [clojure.java-time "0.3.2"]
                  [criterium "0.4.4"]]
-  :main ^:skip-aot pet-redo.core
+  :main ^:skip-aot pet-redo.text-game.text-main
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})

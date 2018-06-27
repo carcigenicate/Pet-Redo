@@ -9,7 +9,7 @@
 (defrecord Game [pet last-update settings])
 
 (defn new-game-now [max-health max-satiety settings]
-  (->Game (p/new-pet max-health max-satiety)
+  (->Game (p/new-pet-now max-health max-satiety)
           (th/now)
           settings))
 

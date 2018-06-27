@@ -3,7 +3,7 @@
             [java-time.zone :as jz]
             [java-time.format :as jf]))
 
-(def format-str "zz-SSSS-ss-mm-kk-dd-MM-yyyy")
+(def format-str "yyyy-MM-dd-kk-mm-ss-SSSS-zz")
 
 (defn current-timezone []
   (jz/zone-id))

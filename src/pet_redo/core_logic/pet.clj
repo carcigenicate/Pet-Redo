@@ -1,15 +1,15 @@
 (ns pet-redo.core-logic.pet
-  (:require [criterium.core :as cc]
-            [pet-redo.core-logic.helpers :as ph]
-            [pet-redo.core-logic.bounded-resource :as br]))
+  (:require [pet-redo.core-logic.bounded-resource :as br]
+            [pet-redo.core-logic.time-helpers :as th]))
 
-(defrecord Pet [health satiety]
+(defrecord Pet [health satiety birth-date]
   Object
   (toString [this] (str "<[HP: " health " - Sat: " satiety "]>")))
 
-(defn new-pet [max-health max-satiety]
+(defn new-pet-now [max-health max-satiety]
   (->Pet (br/new-maxed-resource max-health)
-         (br/new-maxed-resource max-satiety)))
+         (br/new-maxed-resource max-satiety)
+         (th/now)))
 
 (defn heal [pet by]
   (update pet :health
@@ -30,6 +30,11 @@
 
 (defn dead? [pet]
   (-> pet :health :n (zero?)))
+
+(defn days-old [pet]
+  (-> (th/ms-elapsed (:birth-date pet) (th/now))
+      (/ 1000 60 60 24)
+      (double)))
 
 (defn advance-by-tick [pet pain-per-tick starve-per-tick heal-per-tick]
   (cond

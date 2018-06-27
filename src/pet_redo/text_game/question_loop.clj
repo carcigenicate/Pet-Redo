@@ -2,10 +2,7 @@
   (:require [helpers.general-helpers :as g]
             [pet-redo.quiz-logic.question-generator :as qg]
             [pet-redo.core-logic.pet :as p]
-            [pet-redo.core-logic.game :as pg])
-  (:import (clojure.lang IRecord Seqable Associative)))
-
-Associative
+            [pet-redo.core-logic.game :as pg]))
 
 (defn parse-int? [n]
   (try
