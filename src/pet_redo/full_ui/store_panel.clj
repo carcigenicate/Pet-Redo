@@ -13,7 +13,7 @@
 
 ; TODO: Make collapsible somehow?
 (defn new-store-panel [items game-atom]
-  (let [format-item #(str (:description %) "\n" (:price %) "sat")
+  (let [format-item #(str "<html>"(:description %) "<br>" (:price %) "sat</html>")
         item-entires (map format-item items)
         lookup-map (into {} (map #(vector (format-item %) %) items)) ; TODO: Hack!
 
