@@ -8,6 +8,8 @@
             [pet-redo.core-logic.pet :as p]
             [pet-redo.text-game.store-menu :as sm]
 
+            [pet-redo.defaults :as default]
+
             [clojure.string :as str]
 
             [helpers.general-helpers :as g])
@@ -16,13 +18,6 @@
 
 (def global-rand-gen (g/new-rand-gen))
 (def default-question-template std-t/std-templates)
-
-(def default-new-settings
-  (s/->Game-Settings (s/adjusted-sim-settings 75 80 60 500)
-                     (s/->Question-Settings 5 5)))
-
-(def default-new-game
-  (pg/new-game-now 100 100 default-new-settings))
 
 (defn answer-questions [game]
   (-> game
@@ -35,7 +30,6 @@
   (serial/write-save game)
   nil)
 
-; TODO: Change to a vector and index instead? Use (get menu) to prevent oob.
 (def main-menu-options
   [["Answer Questions" answer-questions]
    ["Store" store]
@@ -51,7 +45,7 @@
     (println (str pet))
     (println "They were" (p/days-old (:pet game)) "days old.\n\n"))
 
-  (doto default-new-game
+  (doto (default/new-game-now)
         (serial/write-save)))
 
 (defn main-loop [initial-game]
@@ -78,11 +72,7 @@
         (recur updated-game?)))))
 
 
-(defn -main []
-  (let [state-save (or (serial/read-save?)
-                       default-new-game)
-
-        end-game (main-loop state-save)]
-
-    (serial/write-save end-game)
-    nil))
+(defn -main [loaded-save]
+  (-> loaded-save
+      (main-loop)
+      (serial/write-save)))

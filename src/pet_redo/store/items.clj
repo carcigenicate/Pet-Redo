@@ -4,6 +4,7 @@
 (defn inc-max-stat [game stat-key amount]
   (update-in game [:pet stat-key :max] + amount))
 
+; Triplets of [Description Sat-Price Game-Effecting-F]
 (def store-items
   (i/items
     ["Increase Satiety" 90 #(inc-max-stat % :satiety 5)]
